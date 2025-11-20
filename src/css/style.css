@@ -1,11 +1,4 @@
-.img-cover {
-  object-fit: cover;
-}
 .custom-radius {
-  border-radius: 20px; /* välj hur rund du vill ha */
-  border-radius: 20px; /* välj hur rund du vill ha */
-  overflow: hidden; /* för att bilden inte ska sticka ut */
-}
-.p-2-5 {
-  padding: 0.75rem !important;
+  border-radius: 20px;
+  overflow: hidden;
 }

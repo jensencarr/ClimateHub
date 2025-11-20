@@ -3,32 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WeatherWizard</title>
+    <title>ClimateHub</title>
   </head>
   <body>
     <div class="container p-0">
       <div class="border-bottom mb-3">
-        <h1 class="d-flex justify-content-center p-3 w-100">WeatherWizard</h1>
+        <h1 class="d-flex justify-content-center p-3 w-100">ClimateHub</h1>
       </div>
       <div class="row">
-        <div class="col-10 mx-auto">
+        <div class="col-10 m-auto">
           <form class="search-form">
             <div class="input-group mb-3">
               <input
                 type="search"
-                class="form-control"
+                class="form-control location-input"
                 name="city"
                 placeholder="Enter location"
                 aria-label="Search city"
               />
               <div class="input-group-append">
-                <button class="input-group-text" type="submit">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
+                <span class="input-group-text rounded-0 rounded-end">
+                  <button class="btn p-0 border-0 bg-transparent" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </span>
               </div>
             </div>
           </form>
         </div>
+        <div
+          class="col-10 m-auto alert alert-warning border-2 border-warning mb-3 d-none"
+          role="alert"
+        ></div>
         <div class="col-12 d-flex justify-content-center">
           <h3>Wednesday, June 22</h3>
         </div>
