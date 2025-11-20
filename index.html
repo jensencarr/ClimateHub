@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WeatherWizard</title>
+  </head>
+  <body>
+    <div class="container p-0">
+      <div class="border-bottom mb-3">
+        <h1 class="d-flex justify-content-center p-3 w-100">WeatherWizard</h1>
+      </div>
+      <div class="row">
+        <div class="col-10 mx-auto">
+          <form class="search-form">
+            <div class="input-group mb-3">
+              <input
+                type="search"
+                class="form-control"
+                name="city"
+                placeholder="Enter location"
+                aria-label="Search city"
+              />
+              <div class="input-group-append">
+                <button class="input-group-text" type="submit">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+          <h3>Wednesday, June 22</h3>
+        </div>
+        <div class="col-12 d-flex justify-content-center pb-2">
+          <h2 class="city-country-header">Stockholm, SE</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-9 border p-0 custom-radius mx-auto mb-4">
+          <div class="weather-image-wrapper">
+            <img
+              src="src/images/day-image.jpg"
+              alt="day-image"
+              class="img-cover w-100 h-100"
+            />
+          </div>
+          <div class="col-12">
+            <img
+              src="src/images/weather-condition-test.png"
+              class="w-25 mx-auto m-2 d-flex mt-3"
+            />
+          </div>
+          <div class="col-12">
+            <h3 class="text-center p-2 temp-now">13&#8451;</h3>
+          </div>
+          <div class="col-12">
+            <div class="row mb-3 ms-1 me-1">
+              <div class="col-2 p-0">
+                <img
+                  src="src/images/weather-condition-test.png"
+                  alt="Weather Condition"
+                  class="w-100 p-2"
+                />
+                <p class="text-center mb-2">Thu</p>
+                <p class="text-center">10&#8451;</p>
+              </div>
+              <div class="col-2 p-0">
+                <img
+                  src="src/images/weather-condition-test.png"
+                  alt="Weather Condition"
+                  class="w-100 p-2"
+                />
+                <p class="text-center mb-2">Fri</p>
+                <p class="text-center">10&#8451;</p>
+              </div>
+              <div class="col-2 p-0">
+                <img
+                  src="src/images/weather-condition-test.png"
+                  alt="Weather Condition"
+                  class="w-100 p-2"
+                />
+                <p class="text-center mb-2">Sat</p>
+                <p class="text-center">10&#8451;</p>
+              </div>
+              <div class="col-2 p-0">
+                <img
+                  src="src/images/weather-condition-test.png"
+                  alt="Weather Condition"
+                  class="w-100 p-2"
+                />
+                <p class="text-center mb-2">Sun</p>
+                <p class="text-center">10&#8451;</p>
+              </div>
+              <div class="col-2 p-0">
+                <img
+                  src="src/images/weather-condition-test.png"
+                  alt="Weather Condition"
+                  class="w-100 p-2"
+                />
+                <p class="text-center mb-2">Mon</p>
+                <p class="text-center">10&#8451;</p>
+              </div>
+              <div class="col-2 p-0">
+                <img
+                  src="src/images/weather-condition-test.png"
+                  alt="Weather Condition"
+                  class="w-100 p-2"
+                />
+                <p class="text-center mb-2">Tue</p>
+                <p class="text-center">10&#8451;</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://kit.fontawesome.com/1b5866bf84.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
