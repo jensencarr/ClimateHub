@@ -4,4 +4,10 @@ export interface WeatherData {
   sys: { country: string };
   dt: number;
   timezone: number;
+  weather: [
+    {
+      description: string;
+      icon: string;
+    }
+  ];
 }

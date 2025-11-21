@@ -13,6 +13,8 @@ const cityAndCountry = document.querySelector<HTMLHeadingElement>(
 )!;
 const loadingContainer =
   document.querySelector<HTMLDivElement>(".loading-container")!;
+const weatherNowImage =
+  document.querySelector<HTMLImageElement>(".weather-now-image")!;
 
 export const showError = (msg: string) => {
   alertWarning.classList.remove("d-none");
@@ -57,6 +59,7 @@ export const getWeather = async (city: string) => {
     sys: { country: data.sys.country },
     dt: data.dt,
     timezone: data.timezone,
+    weather: data.weather,
   };
 
   return filteredData;
@@ -80,10 +83,33 @@ export const renderWeather = (data: WeatherData) => {
     minute: "2-digit",
   });
 
+  const weatherIcon = data.weather[0].icon;
+
+  setLocalStoage(data);
+
   loadingContainer.classList.add("d-none");
 
+  weatherNowImage.src = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
   tempNow.textContent = String(Math.round(data.main.temp)) + "°C";
   cityAndCountry.textContent = `${data.name}, ${data.sys.country}`;
   dateContainer.textContent = `${date}`;
   timeContainer.textContent = `${time}`;
+};
+const setLocalStoage = (data: WeatherData) => {
+  const stringData = JSON.stringify(data);
+  localStorage.setItem("location", stringData);
+};
+
+export const getLocalStorage = async () => {
+  const data = localStorage.getItem("location");
+
+  if (!data) {
+    const defaultData = await getWeather("malmö");
+    renderWeather(defaultData);
+    return;
+  }
+
+  const parsedData = JSON.parse(data);
+  const fetchedData = await getWeather(parsedData.name);
+  renderWeather(fetchedData);
 };

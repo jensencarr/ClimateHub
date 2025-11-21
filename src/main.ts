@@ -5,6 +5,7 @@ import {
   showError,
   renderWeather,
   loadingSpinner,
+  getLocalStorage,
 } from "./services/OWMAPI";
 
 const searchForm = document.querySelector<HTMLFormElement>(".search-form")!;
@@ -17,6 +18,7 @@ searchForm.addEventListener("submit", async (e) => {
   try {
     await loadingSpinner();
     const weatherData = await getWeather(locationInput.value);
+    console.log(weatherData);
     renderWeather(weatherData);
     locationInput.value = "";
   } catch (err) {
@@ -24,5 +26,4 @@ searchForm.addEventListener("submit", async (e) => {
   }
 });
 
-const startPageData = await getWeather("malmö");
-renderWeather(startPageData);
+getLocalStorage();
