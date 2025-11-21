@@ -1,6 +1,11 @@
 import "./css/style.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { getWeather, showError } from "./services/OWMAPI";
+import {
+  getWeather,
+  showError,
+  renderWeather,
+  loadingSpinner,
+} from "./services/OWMAPI";
 
 const searchForm = document.querySelector<HTMLFormElement>(".search-form")!;
 const locationInput =
@@ -10,11 +15,14 @@ searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   try {
-    await getWeather(locationInput.value);
+    await loadingSpinner();
+    const weatherData = await getWeather(locationInput.value);
+    renderWeather(weatherData);
     locationInput.value = "";
   } catch (err) {
     showError(String(err));
   }
 });
 
-getWeather("batman");
+const startPageData = await getWeather("malmö");
+renderWeather(startPageData);
