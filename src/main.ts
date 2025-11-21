@@ -1,7 +1,7 @@
 import "./css/style.css";
 import "bootstrap/dist/css/bootstrap.css";
 import {
-  getWeather,
+  getCurrentWeather,
   showError,
   renderWeather,
   loadingSpinner,
@@ -17,9 +17,10 @@ searchForm.addEventListener("submit", async (e) => {
 
   try {
     await loadingSpinner();
-    const weatherData = await getWeather(locationInput.value);
+    const weatherData = await getCurrentWeather(locationInput.value);
+
     console.log(weatherData);
-    renderWeather(weatherData);
+    await renderWeather(weatherData);
     locationInput.value = "";
   } catch (err) {
     showError(String(err));

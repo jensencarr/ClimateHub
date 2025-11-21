@@ -1,4 +1,4 @@
-import type { WeatherData } from "./OWMAPI.types";
+import type { WeatherData, LonLatData } from "./OWMAPI.types";
 
 const BASE_URL: string = "https://api.openweathermap.org/data/2.5";
 const API_KEY: string = "3f64a94b1ff47222d35924a8ee828d5f";
@@ -17,6 +17,7 @@ const weatherNowImage =
   document.querySelector<HTMLImageElement>(".weather-now-image")!;
 
 export const showError = (msg: string) => {
+  loadingContainer.classList.add("d-none");
   alertWarning.classList.remove("d-none");
   alertWarning.textContent = msg;
   console.log(alertWarning.textContent);
@@ -28,6 +29,8 @@ const hideError = () => {
 };
 
 export const loadingSpinner = async () => {
+  hideError();
+
   timeContainer.textContent = "";
   dateContainer.textContent = "";
   cityAndCountry.textContent = "";
@@ -40,7 +43,7 @@ export const loadingSpinner = async () => {
   });
 };
 
-export const getWeather = async (city: string) => {
+export const getCurrentWeather = async (city: string) => {
   const response = await fetch(
     `${BASE_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`
   );
@@ -48,10 +51,7 @@ export const getWeather = async (city: string) => {
     throw new Error(response.status + " " + response.statusText);
   }
 
-  hideError();
   const data = await response.json();
-
-  console.log(data);
 
   const filteredData: WeatherData = {
     name: data.name,
@@ -59,13 +59,14 @@ export const getWeather = async (city: string) => {
     sys: { country: data.sys.country },
     dt: data.dt,
     timezone: data.timezone,
+    coord: { lon: data.coord.lon, lat: data.coord.lat },
     weather: data.weather,
   };
 
   return filteredData;
 };
 
-export const renderWeather = (data: WeatherData) => {
+export const renderWeather = async (data: WeatherData) => {
   const tempNow = document.querySelector<HTMLHeadingElement>(".temp-now")!;
 
   const localTime = (data.dt + data.timezone) * 1000;
@@ -85,7 +86,9 @@ export const renderWeather = (data: WeatherData) => {
 
   const weatherIcon = data.weather[0].icon;
 
-  setLocalStoage(data);
+  saveLocalStoage(data);
+  console.log(`lon: ${data.coord.lon} lat: ${data.coord.lat}`);
+  await getForecastWeather(data.coord.lon, data.coord.lat);
 
   loadingContainer.classList.add("d-none");
 
@@ -95,21 +98,38 @@ export const renderWeather = (data: WeatherData) => {
   dateContainer.textContent = `${date}`;
   timeContainer.textContent = `${time}`;
 };
-const setLocalStoage = (data: WeatherData) => {
+const saveLocalStoage = (data: WeatherData) => {
   const stringData = JSON.stringify(data);
   localStorage.setItem("location", stringData);
 };
 
 export const getLocalStorage = async () => {
-  const data = localStorage.getItem("location");
+  try {
+    const data = localStorage.getItem("location");
 
-  if (!data) {
-    const defaultData = await getWeather("malmö");
-    renderWeather(defaultData);
-    return;
+    if (!data) {
+      const defaultData = await getCurrentWeather("malmö");
+      renderWeather(defaultData);
+      return;
+    }
+
+    const parsedData = JSON.parse(data);
+    const fetchedData = await getCurrentWeather(parsedData.name);
+    renderWeather(fetchedData);
+  } catch (err) {
+    showError(String(err));
   }
+};
 
-  const parsedData = JSON.parse(data);
-  const fetchedData = await getWeather(parsedData.name);
-  renderWeather(fetchedData);
+const getForecastWeather = async (lon: number, lat: number) => {
+  const response = await fetch(
+    `${BASE_URL}/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${API_KEY}`
+  );
+  console.log(response);
+
+  if (!response.ok) {
+    throw new Error(response.status + " " + response.statusText);
+  }
+  const data = await response.json();
+  console.log("Forecast:", data);
 };
